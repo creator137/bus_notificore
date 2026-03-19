@@ -1,4 +1,10 @@
 /vendor/
 /.env
+
 /logs/*.log
 /logs/*.jsonl
+/public/logs/*.log
+/public/logs/*.jsonl
+
+/storage/*.json
+!/storage/.gitkeep
