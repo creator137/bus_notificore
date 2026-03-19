@@ -1,0 +1,25 @@
+{
+    "dev-portal-1": {
+        "member_id": "dev-portal-1",
+        "domain": "local.test",
+        "access_token": "mock-token",
+        "refresh_token": "",
+        "expires_at": 9999999999,
+        "installed_at": "2026-03-17T21:00:00+03:00"
+    },
+    "dev-installed-portal": {
+        "member_id": "dev-installed-portal",
+        "domain": "local.test",
+        "access_token": "mock-token",
+        "refresh_token": "mock-refresh-token",
+        "expires_at": 1773777112,
+        "installed_at": "2026-03-17T21:51:52+03:00",
+        "raw": {
+            "DOMAIN": "local.test",
+            "AUTH_ID": "mock-token",
+            "REFRESH_ID": "mock-refresh-token",
+            "AUTH_EXPIRES": "3600",
+            "member_id": "dev-installed-portal"
+        }
+    }
+}
