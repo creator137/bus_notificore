@@ -101,19 +101,10 @@ final class NotificoreClient implements NotificationClientInterface
 
     private function buildHeaders(): array
     {
-        return match (strtolower($this->authMode)) {
-            'bearer' => [
-                'Authorization: Bearer ' . $this->apiKey,
-            ],
-            'header' => [
-                $this->apiKeyHeader . ': ' . $this->apiKey,
-            ],
-            'basic' => [
-                'Authorization: Basic ' . base64_encode($this->login . ':' . $this->password),
-            ],
-            'none' => [],
-            default => throw new RuntimeException('Unsupported Notificore auth mode: ' . $this->authMode),
-        };
+        return [
+            'X-API-KEY: ' . $this->apiKey,
+            'Content-Type: text/json; charset=utf-8',
+        ];
     }
 
     private function guardSmsConfig(): void
