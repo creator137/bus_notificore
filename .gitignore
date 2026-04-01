@@ -9,3 +9,5 @@
 /storage/*.json
 !/storage/.gitkeep
 .vscode
+*.zip
+.DS_Store
