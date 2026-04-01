@@ -82,13 +82,15 @@ class notificore_sms extends CModule
     public function InstallEvents(): void
     {
         EventManager::getInstance()->registerEventHandlerCompatible('main', 'OnBeforeEventAdd', $this->MODULE_ID, \Notificore\Sms\Event\MailEventHandler::class, 'onBeforeEventAdd');
-        EventManager::getInstance()->registerEventHandlerCompatible('sale', 'OnSaleOrderSaved', $this->MODULE_ID, \Notificore\Sms\Event\SaleOrderEventHandler::class, 'onSaleOrderSaved');
+        EventManager::getInstance()->registerEventHandler('sale', 'OnSaleOrderSaved', $this->MODULE_ID, \Notificore\Sms\Event\SaleOrderEventHandler::class, 'onSaleOrderSaved');
+        EventManager::getInstance()->registerEventHandlerCompatible('form', 'onAfterResultAdd', $this->MODULE_ID, \Notificore\Sms\Event\FormEventHandler::class, 'onAfterResultAdd');
     }
 
     public function UnInstallEvents(): void
     {
         EventManager::getInstance()->unRegisterEventHandler('main', 'OnBeforeEventAdd', $this->MODULE_ID, \Notificore\Sms\Event\MailEventHandler::class, 'onBeforeEventAdd');
         EventManager::getInstance()->unRegisterEventHandler('sale', 'OnSaleOrderSaved', $this->MODULE_ID, \Notificore\Sms\Event\SaleOrderEventHandler::class, 'onSaleOrderSaved');
+        EventManager::getInstance()->unRegisterEventHandler('form', 'onAfterResultAdd', $this->MODULE_ID, \Notificore\Sms\Event\FormEventHandler::class, 'onAfterResultAdd');
     }
 
     public function InstallAgents(): void

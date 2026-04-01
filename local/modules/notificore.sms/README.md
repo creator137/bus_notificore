@@ -15,6 +15,7 @@
 
 - `sale_order_created` — создание заказа
 - `mail_event` — почтовые события Bitrix
+- `form_result_added` — отправка веб-формы Bitrix
 - `reminder` — отложенные напоминания
 - `custom_event` — произвольные события через API модуля
 

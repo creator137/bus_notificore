@@ -9,6 +9,7 @@ final class TextHelper
         return match (mb_strtolower(trim($source))) {
             'manual_ui' => 'Тест из админки',
             'mail_event' => 'Почтовое событие',
+            'form_result_added' => 'Результат веб-формы',
             'sale_order_created' => 'Создание заказа',
             'reminder' => 'Напоминание',
             'custom_event' => 'Кастомное событие',
@@ -24,6 +25,7 @@ final class TextHelper
         return match (mb_strtolower(trim($eventType))) {
             'sale_order_created' => 'Создание заказа',
             'mail_event' => 'Почтовое событие',
+            'form_result_added' => 'Результат веб-формы',
             'reminder' => 'Напоминание',
             'custom_event' => 'Кастомное событие',
             default => $eventType === '' ? 'Не указан' : $eventType,

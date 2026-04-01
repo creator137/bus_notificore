@@ -167,7 +167,8 @@ final class SettingsPage
                                 <label for="callback_token">Токен callback</label>
                                 <input id="callback_token" type="text" name="callback_token" value="<?= $this->e($this->settings['callback_token'] ?? '') ?>">
                             </div>
-                        </div>                        <div class="notificore-form-grid-3" style="margin-top:14px;">
+                        </div>
+                        <div class="notificore-form-grid-3" style="margin-top:14px;">
                             <div class="notificore-field">
                                 <label for="sms_status_path">Путь статуса по ID</label>
                                 <input id="sms_status_path" type="text" name="sms_status_path" value="<?= $this->e($this->settings['sms_status_path'] ?? '/v1.0/sms/{id}') ?>">
@@ -192,7 +193,7 @@ final class SettingsPage
                             </div>
                         </div>
                         <div class="notificore-actions">
-                            <button class="adm-btn-save" type="submit">Сохранить настройки</button>
+                            <button class="adm-btn adm-btn-save" type="submit">Сохранить настройки</button>
                         </div>
                     </form>
                 </div>
@@ -222,7 +223,7 @@ final class SettingsPage
                             <textarea id="test_message" name="test_message"><?= $this->e((string)($request->getPost('test_message') ?: 'Спасибо за обращение в службу заботы застройщика «Атмосфера». Наш специалист свяжется с вами в течение 4 рабочих дней.')) ?></textarea>
                         </div>
                         <div class="notificore-actions">
-                            <button class="adm-btn-save" type="submit">Отправить тестовую SMS</button>
+                            <button class="adm-btn adm-btn-save" type="submit">Отправить тестовую SMS</button>
                         </div>
                     </form>
 
@@ -343,19 +344,22 @@ final class SettingsPage
                         </div>
                         <div class="notificore-field">
                             <label>Подсказка по типам</label>
-                            <div class="notificore-summary-item">
-                                <div><strong>Создание заказа</strong>: тип <code>sale_order_created</code>, код можно оставить пустым или указать <code>s1</code>.</div>
-                                <div class="notificore-note"><strong>Обращения</strong>: тип <code>mail_event</code>, код = имя почтового события Bitrix.</div>
-                                <div class="notificore-note"><strong>Напоминания</strong>: тип <code>reminder</code>, код = произвольный код напоминания.</div>
-                                <div class="notificore-note"><strong>Кастомное событие</strong>: тип <code>custom_event</code>, вызывается через API модуля.</div>
-                            </div>
+                                <div class="notificore-summary-item">
+                                    <div><strong>Создание заказа</strong>: тип <code>sale_order_created</code>, код можно оставить пустым или указать <code>s1</code>.</div>
+                                    <div class="notificore-note"><strong>Обращения</strong>: тип <code>mail_event</code>, код = имя почтового события Bitrix.</div>
+                                    <div class="notificore-note"><strong>Веб-формы</strong>: тип <code>form_result_added</code>, код = SID формы (или ID, если SID пустой).</div>
+                                    <div class="notificore-note"><strong>Напоминания</strong>: тип <code>reminder</code>, код = произвольный код напоминания.</div>
+                                    <div class="notificore-note"><strong>Кастомное событие</strong>: тип <code>custom_event</code>, вызывается через API модуля.</div>
+                                </div>
                         </div>
                     </div>
                     <div class="notificore-actions">
-                        <button class="adm-btn-save" type="submit">Сохранить правило</button>
+                        <button class="adm-btn adm-btn-save" type="submit">Сохранить правило</button>
                     </div>
                 </form>
-            </div>            <div class="notificore-card">
+            </div>
+
+            <div class="notificore-card">
                 <h2>API для разработчика</h2>
                 <div class="notificore-form-grid">
                     <div>
@@ -565,7 +569,9 @@ final class SettingsPage
         }
 
         $this->feedback = ['type' => 'error', 'text' => TextHelper::humanizeError((string)($result['error_message'] ?? 'Не удалось отправить тестовую SMS.'))];
-    }    private function saveRule(): void
+    }
+
+    private function saveRule(): void
     {
         $request = Application::getInstance()->getContext()->getRequest();
         $eventType = trim((string)$request->getPost('event_type'));
@@ -641,7 +647,12 @@ final class SettingsPage
             default => 'adm-info-message-wrap adm-info-message',
         };
 
-        echo '<div class="' . $this->e($className) . '"><div class="adm-info-message">' . $this->e((string)$this->feedback['text']) . '</div></div>';
+        echo '<div class="' . $this->e($className) . '">'
+            . '<div class="adm-info-message">'
+            . '<div class="adm-info-message-title">' . $this->e((string)$this->feedback['text']) . '</div>'
+            . '<div class="adm-info-message-icon"></div>'
+            . '</div>'
+            . '</div>';
     }
 
     private function messageContext(array $message): string
@@ -672,6 +683,7 @@ final class SettingsPage
         return [
             'sale_order_created' => 'Создание заказа',
             'mail_event' => 'Почтовое событие',
+            'form_result_added' => 'Результат веб-формы',
             'reminder' => 'Напоминание',
             'custom_event' => 'Кастомное событие',
         ];

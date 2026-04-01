@@ -65,6 +65,13 @@ final class EventRuleRepository
             return $id;
         }
 
+        $duplicateId = $this->findDuplicateId($payload);
+
+        if ($duplicateId > 0) {
+            EventRuleTable::update($duplicateId, $payload);
+            return $duplicateId;
+        }
+
         $result = EventRuleTable::add($payload + [
             'CREATED_AT' => DateTimeHelper::now(),
         ]);
@@ -100,5 +107,25 @@ final class EventRuleRepository
         $value = trim((string)$value);
 
         return $value === '' ? null : $value;
+    }
+
+    private function findDuplicateId(array $payload): int
+    {
+        $result = EventRuleTable::getList([
+            'select' => ['ID'],
+            'filter' => [
+                '=EVENT_TYPE' => (string)($payload['EVENT_TYPE'] ?? ''),
+                '=EVENT_CODE' => $payload['EVENT_CODE'] ?? null,
+                '=PHONE_PATH' => (string)($payload['PHONE_PATH'] ?? ''),
+                '=MESSAGE_TEMPLATE' => (string)($payload['MESSAGE_TEMPLATE'] ?? ''),
+                '=EXTERNAL_ID_TEMPLATE' => $payload['EXTERNAL_ID_TEMPLATE'] ?? null,
+            ],
+            'order' => ['ID' => 'ASC'],
+            'limit' => 1,
+        ]);
+
+        $row = $result->fetch();
+
+        return (int)($row['ID'] ?? 0);
     }
 }
